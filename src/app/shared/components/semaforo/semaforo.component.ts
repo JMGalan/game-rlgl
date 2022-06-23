@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class SemaforoComponent {
 
-  colorBulb: string = 'green';
+  isBulbOn: boolean = true;
 
   @Input() userName = '';
   @Output() onLogout : EventEmitter<boolean> = new EventEmitter();

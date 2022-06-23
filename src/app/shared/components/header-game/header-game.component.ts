@@ -1,17 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header-game',
   templateUrl: './header-game.component.html',
   styles: []
 })
-export class HeaderGameComponent implements OnInit {
+export class HeaderGameComponent {
 
   @Input() userName = '';
+  @Output() onLogout : EventEmitter<boolean> = new EventEmitter();
 
   constructor() {}
 
-  ngOnInit(): void {
+  emitLogout() {
+    this.onLogout.emit(true);
   }
 
 }

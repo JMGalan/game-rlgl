@@ -17,7 +17,7 @@ export class GameComponent {
   ) {
     this.auth.authState.subscribe( fuser => {
       if (fuser && fuser.email) {
-        this.userName = fuser?.email?.split('#')[0];
+        this.userName = fuser?.email?.split('@')[0];
       }
     });
   }

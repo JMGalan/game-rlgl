@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { map } from 'rxjs/operators';
-import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -13,7 +12,8 @@ export class GameComponent {
   userName: string = '';
 
   constructor(
-    public auth: AngularFireAuth
+    public auth: AngularFireAuth,
+    private router: Router
   ) {
     this.auth.authState.subscribe( fuser => {
       if (fuser && fuser.email) {

@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ButtonGameComponent {
 
   @Input() modeButton: string = 'left';
-  @Output() onClick : EventEmitter<boolean> = new EventEmitter();
+  @Output() onBtnClick : EventEmitter<string> = new EventEmitter();
 
   get textButton():string {
     return this.modeButton.toUpperCase();
@@ -16,4 +16,7 @@ export class ButtonGameComponent {
 
   constructor() {}
 
+  clickButton(mode: string) {
+    this.onBtnClick.emit(mode);
+  }
 }

@@ -9,8 +9,10 @@
   <app-score></app-score>
 
   <div class="game-buttons-container">
-    <app-button-game modeButton="left"></app-button-game>
-    <app-button-game modeButton="right"></app-button-game>
+    <app-button-game modeButton="left"
+      (onBtnClick)="gameButtonClick($event)"></app-button-game>
+    <app-button-game modeButton="right"
+      (onBtnClick)="gameButtonClick($event)"></app-button-game>
   </div>
 
 </div>

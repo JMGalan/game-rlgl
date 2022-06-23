@@ -44,8 +44,12 @@ export class GameComponent implements OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.authStateSubs.unsubscribe();
     this.getCollectionSubs.unsubscribe();
+  }
+
+  gameButtonClick(mode: string) {
+    console.log('click en ... '+mode);
   }
 }

@@ -7,13 +7,15 @@ import { ButtonLoginComponent } from './components/button-login/button-login.com
 import { InputLoginComponent } from './components/input-login/input-login.component';
 import { HighScoreComponent } from './components/high-score/high-score.component';
 import { ScoreComponent } from './components/score/score.component';
+import { SemaforoComponent } from './components/semaforo/semaforo.component';
 
 @NgModule({
   declarations: [
     InputLoginComponent,
     ButtonLoginComponent,
     HighScoreComponent,
-    ScoreComponent
+    ScoreComponent,
+    SemaforoComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { ScoreComponent } from './components/score/score.component';
     InputLoginComponent,
     ButtonLoginComponent,
     HighScoreComponent,
-    ScoreComponent
+    ScoreComponent,
+    SemaforoComponent
   ]
 })
 export class SharedModule { }

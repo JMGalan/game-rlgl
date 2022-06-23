@@ -43,3 +43,14 @@ html, body {
   margin-top: 30px;
   text-align: center;
 }
+
+.game-buttons-container div {
+  flex: 1;
+}
+
+.game-buttons-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-around;
+}
+

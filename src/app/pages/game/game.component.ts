@@ -32,6 +32,7 @@ export class GameComponent implements OnDestroy {
         .subscribe( (doc) => {
           this.highScore = doc[0].highscore;
           this.score = doc[0].score;
+          localStorage.setItem('docUser', JSON.stringify(doc[0]));
         })
       }
     });

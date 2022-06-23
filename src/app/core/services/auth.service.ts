@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { userDoc } from '../models/usuario.interface';
 
 import { Usuario } from '../models/usuario.model';
+import { HighScoreComponent } from '../../shared/components/high-score/high-score.component';
+import { hideLoading } from '../../../../../practicaMto2/src/app/store/actions/loading.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -40,11 +42,19 @@ export class AuthService {
     return this.auth.signInWithEmailAndPassword(email, '123456');
   }
 
+  logout() {
+    return this.auth.signOut();
+  }
+
   getCollection(uid: string): Observable<userDoc[]|any> {
     return this.firestore.collection(`${uid}`).valueChanges()
   }
 
-  logout() {
-    return this.auth.signOut();
+  getHighScore(): number {
+    let highScore = 0;
+    try {
+      highScore = JSON.parse(localStorage.getItem('docUser') || '{}').highscore;
+    } catch (err) {}
+    return highScore;
   }
 }

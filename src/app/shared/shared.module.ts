@@ -6,11 +6,13 @@ import { RouterModule } from '@angular/router';
 import { ButtonLoginComponent } from './components/button-login/button-login.component';
 import { InputLoginComponent } from './components/input-login/input-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HighScoreComponent } from './components/high-score/high-score.component';
 
 @NgModule({
   declarations: [
     InputLoginComponent,
-    ButtonLoginComponent
+    ButtonLoginComponent,
+    HighScoreComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     InputLoginComponent,
-    ButtonLoginComponent
+    ButtonLoginComponent,
+    HighScoreComponent
   ]
 })
 export class SharedModule { }

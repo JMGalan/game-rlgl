@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+h2 {
+  text-align: center;
+}
+h2.title-home {
+  margin-top: 50px;
+}
+
+.ico-home {
+  text-align: center;
+  margin-top: 10vh;
+}

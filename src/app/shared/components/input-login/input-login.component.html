@@ -1,0 +1,9 @@
+<form id="form-login"
+      autocomplete="off"
+      [formGroup]="authForm"
+      (ngSubmit)="login">
+  <label for="inputUser" class="form-label">Email address</label>
+  <input type="text"
+         formControlName="user"
+         class="form-control" />
+</form>

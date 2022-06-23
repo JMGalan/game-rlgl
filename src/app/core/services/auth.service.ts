@@ -53,8 +53,26 @@ export class AuthService {
   getHighScore(): number {
     let highScore = 0;
     try {
-      highScore = JSON.parse(localStorage.getItem('docUser') || '{}').highscore;
-    } catch (err) {}
+      highScore = JSON.parse(localStorage.getItem('docUser') || '{}').highScore;
+      if (!highScore) {
+        highScore = 0;
+      }
+    } catch (err) {
+      highScore = 0;
+    }
     return highScore;
+  }
+
+  getScore(): number {
+    let score = 0;
+    try {
+      score = JSON.parse(localStorage.getItem('docUser') || '{}').score;
+      if (!score) {
+        score = 0;
+      }
+    } catch (err) {
+      score = 0;
+    }
+    return score;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-semaforo',
@@ -7,10 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class SemaforoComponent {
 
-  isBulbOn: boolean = true;
-
-  @Input() userName = '';
-  @Output() onLogout : EventEmitter<boolean> = new EventEmitter();
+  @Input() semaforoState: string = "red";
 
   constructor() {}
 

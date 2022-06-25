@@ -19,8 +19,8 @@ export class GameComponent implements OnInit, OnDestroy {
   lightState: string = 'red';
   stepExpected: string = 'left';
 
-  authStateSubs!: Subscription;
-  getCollectionSubs!: Subscription;
+  timeOutToGreen: any;
+  timeOutToRed: any;
 
   constructor(
     private authServ: AuthService,
@@ -29,15 +29,24 @@ export class GameComponent implements OnInit, OnDestroy {
     this.userName = this.authServ.userName;
   }
 
+  /**
+   * Function for user logout
+   */
+  logout() {
+    this.authServ.logout().then( ()=> {
+      this.router.navigateByUrl('');
+    });
+  }
+
   ngOnInit() {
     this.gameInit();
   }
 
   gameButtonClick(stepClk: string) {
     this.checkScores(stepClk);
+    this.changeTimeToRed();
     this.changeStepExpected();
     this.saveScores();
-    console.log('click en ... '+stepClk);
   }
 
   /**
@@ -54,6 +63,12 @@ export class GameComponent implements OnInit, OnDestroy {
     }
     if (this.highScore < this.score) {
       this.highScore = this.score;
+    }
+  }
+
+  changeTimeToRed() {
+    if (this.lightState === 'green') {
+      this.fncControlGreenLight();
     }
   }
 
@@ -80,32 +95,38 @@ export class GameComponent implements OnInit, OnDestroy {
 
   gameInit() {
     this.lightState = 'red';
-    let setTOgreen = setTimeout( ()=> {
+    this.timeOutToGreen = setTimeout(()=> {
       this.lightState = 'green';
-      let setTOgreen2 = setTimeout(()=> {
-        this.gameInit();
-      }, this.getTimeGreen())
-    }, 3000)
+      this.fncControlGreenLight();
+    }, 3000);
   }
 
-  getTimeGreen() {
-    let random = Math.max(10000 - this.score * 100, 2000) + this.getRandom(-1500, 1500);
-    console.log('time green: '+random);
-    return 2000;
+  fncControlGreenLight() {
+    clearTimeout(this.timeOutToRed);
+    this.timeOutToRed = setTimeout(()=> {
+      this.gameInit();
+    }, this.getTimeToRed())
   }
-  getRandom(min: number, max: number) {
-    let random = (Math.random() * (max - min)) + min;
-    console.log('random: '+random);
+
+  getTimeToRed() {
+    let random = Math.max(10000 - this.score * 100, 2000) + this.getRandom(-1500, 1500);
+    console.log('time to red: '+random);
     return random;
   }
-  
-  logout() {
-    this.authServ.logout().then( ()=> {
-      this.router.navigateByUrl('');
-    });
+
+  /**
+   * Function for get a random number between a max number and a min number
+   * @param min > Min number
+   * @param max > Max number
+   * @returns   > Random number
+   */
+  getRandom(min: number, max: number) {
+    let random = (Math.random() * (max - min)) + min;
+    return random;
   }
 
   ngOnDestroy() {
-    
+    clearTimeout(this.timeOutToGreen);
+    clearTimeout(this.timeOutToRed);
   }
 }

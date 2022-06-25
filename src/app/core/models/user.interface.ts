@@ -1,6 +1,6 @@
 export interface userDoc {
   uid: string;
-  nombre: string;
+  name: string;
   score: number;
   highscore: number;
 }

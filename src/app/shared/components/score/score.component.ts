@@ -1,12 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-score',
   templateUrl: './score.component.html',
-  styles: []
+  styleUrls: ['./score.component.css']
 })
 export class ScoreComponent {
+
+  @Input() mode: string = "";
 
   score: Number = 0;
 

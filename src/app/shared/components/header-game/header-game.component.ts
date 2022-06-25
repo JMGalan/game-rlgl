@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-header-game',
   templateUrl: './header-game.component.html',
-  styles: []
+  styleUrls: ['./header-game.component.css']
 })
 export class HeaderGameComponent {
 

@@ -5,18 +5,16 @@ import { RouterModule } from '@angular/router';
 
 import { ButtonLoginComponent } from './components/button-login/button-login.component';
 import { InputLoginComponent } from './components/input-login/input-login.component';
-import { HighScoreComponent } from './components/high-score/high-score.component';
 import { ScoreComponent } from './components/score/score.component';
-import { SemaforoComponent } from './components/semaforo/semaforo.component';
+import { LightBulbComponent } from './components/light-bulb/light-bulb.component';
 import { ButtonGameComponent } from './components/button-game/button-game.component';
 
 @NgModule({
   declarations: [
     InputLoginComponent,
     ButtonLoginComponent,
-    HighScoreComponent,
     ScoreComponent,
-    SemaforoComponent,
+    LightBulbComponent,
     ButtonGameComponent
   ],
   imports: [
@@ -28,10 +26,9 @@ import { ButtonGameComponent } from './components/button-game/button-game.compon
   exports: [
     InputLoginComponent,
     ButtonLoginComponent,
-    HighScoreComponent,
     ScoreComponent,
-    SemaforoComponent,
+    LightBulbComponent,
     ButtonGameComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -1,0 +1,14 @@
+.dvglobalgame {
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 25px;
+  height: 100vh;
+}
+.game-buttons-container div {
+  flex: 1;
+}
+.game-buttons-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-around;
+}

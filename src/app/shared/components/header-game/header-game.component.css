@@ -1,0 +1,11 @@
+.gameheader-container {
+  background-color: #444;
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+.gameheader div {
+  flex: 1;
+  width: 50%;
+}

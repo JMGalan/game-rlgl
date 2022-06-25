@@ -4,12 +4,11 @@ import { Subscription } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 import { AuthService } from '../../core/services/auth.service';
-import { getHtmlTagDefinition } from '@angular/compiler';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styles: []
+  styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit, OnDestroy {
 
@@ -17,7 +16,7 @@ export class GameComponent implements OnInit, OnDestroy {
   highScore: number = 0;
   score: number = 0;
 
-  semaforoState: string = 'red';
+  lightState: string = 'red';
 
 
   authStateSubs!: Subscription;
@@ -50,13 +49,25 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   gameInit() {
-    this.semaforoState = 'red';
+    this.lightState = 'red';
     let setTOgreen = setTimeout( ()=> {
-      this.semaforoState = 'green';
+      this.lightState = 'green';
+      let setTOgreen2 = setTimeout(()=> {
+        this.gameInit();
+      }, this.getTimeGreen())
     }, 3000)
   }
 
-
+  getTimeGreen() {
+    let random = Math.max(10000 - this.score * 100, 2000) + this.getRandom(-1500, 1500);
+    console.log('time green: '+random);
+    return 2000;
+  }
+  getRandom(min: number, max: number) {
+    let random = (Math.random() * (max - min)) + min;
+    console.log('random: '+random);
+    return random;
+  }
   
   logout() {
     this.authServ.logout().then( ()=> {

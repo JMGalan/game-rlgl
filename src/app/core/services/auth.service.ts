@@ -2,75 +2,80 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
-import { userDoc } from '../models/user.interface';
-import { User } from '../models/user.model';
+import { Scores, UserDoc } from '../models/user.interface';
+import { UserScoresMap } from '../models/user.model';
+
+const PREF_KEY_LOCALSTORAGE = 'GAME_RLGL_';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  userName: string = '';
+
   constructor(
     public auth: AngularFireAuth,
     private firestore: AngularFirestore
   ) {}
 
-  isAuth() {
-    return this.auth.authState.pipe(
-      map( fbUser => fbUser != null )
-    );
+  isAuth(): boolean {
+    let userScores: string = '';
+    let currentUser: string | null = localStorage.getItem(PREF_KEY_LOCALSTORAGE + 'currentUser');
+    if (currentUser) {
+      this.userName = currentUser;
+      return !!this.getUserScores(currentUser);
+    }
+    return false;
   }
 
-  createUser(name: string) {
-    let email = name+'@aaa.com';
-    return this.auth.createUserWithEmailAndPassword(email, '123456')
-            .then( ({user}) => {
-              if (user && user.email) {
-                const newUser = new User(user.uid, user.email.split('@')[0], 0, 0);
-                return this.firestore.doc(`${user.uid}/user/`).set({...newUser});
-              }
-            })
-            .catch( err => console.error );
+  loginRegisterUser(userName: string) {
+    let userScores = this.getUserScores(userName);
+    if (!userScores) {
+      this.createUserScores(userName);
+    }
+    return new Promise((resolve) => {
+      this.userName = userName;
+      localStorage.setItem(PREF_KEY_LOCALSTORAGE + 'currentUser', userName);
+      resolve('');
+    });
   }
 
-  loginUser(name: string) {
-    let email = name+'@aaa.com';
-    return this.auth.signInWithEmailAndPassword(email, '123456');
+  /**
+   * Function for get userScores
+   * @param userName > User name
+   * @returns        > User scores
+   */
+  getUserScores(userName: string) {
+    return localStorage.getItem(PREF_KEY_LOCALSTORAGE + userName);
   }
 
+  /**
+   * Function for create score map for new user
+   * @param userName > User name
+   */
+  createUserScores(userName: string) {
+    const newUser = new UserScoresMap(0, 0);
+    localStorage.setItem(PREF_KEY_LOCALSTORAGE + userName, JSON.stringify({...newUser}));
+  }
+
+  /**
+   * Function for logout
+   * @returns Promise resolved
+   */
   logout() {
-    return this.auth.signOut();
+    return new Promise((resolve) => {
+      localStorage.removeItem(PREF_KEY_LOCALSTORAGE + 'currentUser');
+      resolve('');
+    });
   }
 
-  getCollection(uid: string): Observable<userDoc[]|any> {
+  getCollection(uid: string): Observable<UserDoc[]|any> {
     return this.firestore.collection(`${uid}`).valueChanges()
   }
 
-  getHighScore(): number {
-    let highScore = 0;
-    try {
-      highScore = JSON.parse(localStorage.getItem('docUser') || '{}').highScore;
-      if (!highScore) {
-        highScore = 0;
-      }
-    } catch (err) {
-      highScore = 0;
-    }
-    return highScore;
-  }
-
-  getScore(): number {
-    let score = 0;
-    try {
-      score = JSON.parse(localStorage.getItem('docUser') || '{}').score;
-      if (!score) {
-        score = 0;
-      }
-    } catch (err) {
-      score = 0;
-    }
-    return score;
+  saveScores(scoresObj: Scores) {
+    localStorage.setItem('GAME_RLGL_'+this.userName, JSON.stringify(scoresObj));
   }
 }

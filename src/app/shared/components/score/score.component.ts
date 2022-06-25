@@ -10,10 +10,7 @@ export class ScoreComponent {
 
   @Input() txtLabel: string = "";
   @Input() mode: string = "";
-
-  get score() {
-    return (this.mode == 'highscore') ? this.authServ.getHighScore() : this.authServ.getScore();
-  }
+  @Input() score: number = 0;
 
   constructor( private authServ: AuthService ) {}
 }

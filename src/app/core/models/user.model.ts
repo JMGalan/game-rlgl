@@ -1,8 +1,6 @@
 
-export class User {
+export class UserScoresMap {
   constructor(
-    public uid: string,
-    public nombre: string,
     public highscore: number,
     public score: number
   ){}

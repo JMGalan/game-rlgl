@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -17,35 +17,65 @@ export class GameComponent implements OnInit, OnDestroy {
   score: number = 0;
 
   lightState: string = 'red';
-
+  stepExpected: string = 'left';
 
   authStateSubs!: Subscription;
   getCollectionSubs!: Subscription;
 
   constructor(
-    public auth: AngularFireAuth,
     private authServ: AuthService,
     private router: Router
   ) {
-    this.authStateSubs = this.auth.authState.subscribe( fuser => {
-      if (fuser && fuser.email) {
-        this.userName = fuser?.email?.split('@')[0];
-
-        this.getCollectionSubs = this.authServ.getCollection(fuser.uid).subscribe( (doc) => {
-          this.highScore = doc[0].highscore;
-          this.score = doc[0].score;
-          localStorage.setItem('docUser', JSON.stringify(doc[0]));
-        })
-      }
-    });
+    this.userName = this.authServ.userName;
   }
 
   ngOnInit() {
     this.gameInit();
   }
 
-  gameButtonClick(mode: string) {
-    console.log('click en ... '+mode);
+  gameButtonClick(stepClk: string) {
+    this.checkScores(stepClk);
+    this.changeStepExpected();
+    this.saveScores();
+    console.log('click en ... '+stepClk);
+  }
+
+  /**
+   * Function to control score and highscore
+   * @param stepClk > Button clicked (left | right)
+   */
+  checkScores(stepClk: string) {
+    if (this.lightState === 'red') {
+      this.score = 0;
+    } else if (this.stepExpected == stepClk) {
+      this.score++;
+    } else if (this.score > 0) {
+      this.score--;
+    }
+    if (this.highScore < this.score) {
+      this.highScore = this.score;
+    }
+  }
+
+  /**
+   * Function for change the step expected
+   */
+  changeStepExpected() {
+    if (this.stepExpected === 'left') {
+      this.stepExpected = 'right';
+    } else {
+      this.stepExpected = 'left';
+    }
+  }
+
+  /**
+   * Function for save scores into localstorage
+   */
+  saveScores(){
+    this.authServ.saveScores({
+      'highscore': this.highScore,
+      'score': this.score
+    });
   }
 
   gameInit() {
@@ -76,7 +106,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authStateSubs.unsubscribe();
-    this.getCollectionSubs.unsubscribe();
+    
   }
 }

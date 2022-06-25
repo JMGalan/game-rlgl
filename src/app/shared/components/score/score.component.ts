@@ -8,14 +8,12 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class ScoreComponent {
 
+  @Input() txtLabel: string = "";
   @Input() mode: string = "";
 
-  score: Number = 0;
-
-  constructor(
-    private authServ: AuthService
-  ) {
-    this.score = authServ.getScore();
+  get score() {
+    return (this.mode == 'highscore') ? this.authServ.getHighScore() : this.authServ.getScore();
   }
 
+  constructor( private authServ: AuthService ) {}
 }

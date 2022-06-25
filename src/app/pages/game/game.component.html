@@ -2,12 +2,12 @@
   <app-header-game [userName]="userName"
                    (onLogout)="logout()"></app-header-game>
 
-  <app-score mode="high"></app-score>
+  <app-score txtLabel="High Score" mode="highScore"></app-score>
 
   <app-light-bulb 
             [lightState]="lightState"></app-light-bulb>
 
-  <app-score mode="current"></app-score>
+  <app-score txtLabel="Score" mode="currentScore"></app-score>
 
   <div class="game-buttons-container">
     <app-button-game modeButton="left"

@@ -3,11 +3,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { userDoc } from '../models/usuario.interface';
 
-import { Usuario } from '../models/usuario.model';
-import { HighScoreComponent } from '../../shared/components/high-score/high-score.component';
-import { hideLoading } from '../../../../../practicaMto2/src/app/store/actions/loading.actions';
+import { userDoc } from '../models/user.interface';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,20 +23,20 @@ export class AuthService {
     );
   }
 
-  createUser(nombre: string) {
-    let email = nombre+'@aaa.com';
+  createUser(name: string) {
+    let email = name+'@aaa.com';
     return this.auth.createUserWithEmailAndPassword(email, '123456')
             .then( ({user}) => {
               if (user && user.email) {
-                const newUser = new Usuario(user.uid, user.email.split('@')[0], 0, 0);
-                return this.firestore.doc(`${user.uid}/usuario/`).set({...newUser});
+                const newUser = new User(user.uid, user.email.split('@')[0], 0, 0);
+                return this.firestore.doc(`${user.uid}/user/`).set({...newUser});
               }
             })
             .catch( err => console.error );
   }
 
-  loginUser(nombre: string) {
-    let email = nombre+'@aaa.com';
+  loginUser(name: string) {
+    let email = name+'@aaa.com';
     return this.auth.signInWithEmailAndPassword(email, '123456');
   }
 

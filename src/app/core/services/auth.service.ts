@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
 
-import { Scores, UserDoc } from '../models/user.interface';
+import { Scores } from '../models/user.interface';
 import { UserScoresMap } from '../models/user.model';
 
 const PREF_KEY_LOCALSTORAGE = 'GAME_RLGL_';
@@ -17,10 +14,7 @@ export class AuthService {
   score: number = 0;
   highScore: number = 0;
 
-  constructor(
-    public auth: AngularFireAuth,
-    private firestore: AngularFirestore
-  ) {}
+  constructor() {}
 
   isAuth(): boolean {
     let userScores: string = '';
@@ -32,16 +26,9 @@ export class AuthService {
     return false;
   }
 
-  setScores(jsonScores: Scores) {
-    this.score = jsonScores.score;
-    this.highScore = jsonScores.highscore;
-  }
-
   loginRegisterUser(userName: string) {
     let userScores = this.getUserScores(userName);
-    if (userScores) {
-      this.setScores(JSON.parse(userScores));
-    } else {
+    if (!userScores) {
       this.createUserScores(userName);
     }
     return new Promise((resolve) => {
@@ -57,7 +44,20 @@ export class AuthService {
    * @returns        > User scores
    */
   getUserScores(userName: string) {
-    return localStorage.getItem(PREF_KEY_LOCALSTORAGE + userName);
+    let userScores = localStorage.getItem(PREF_KEY_LOCALSTORAGE + userName);
+    if (userScores) {
+      this.setScores(JSON.parse(userScores));
+    }
+    return userScores;
+  }
+
+  /**
+   * Function for set in the class the user's scores
+   * @param jsonScores > Json with the scores
+   */
+  setScores(jsonScores: Scores) {
+    this.score = jsonScores.score;
+    this.highScore = jsonScores.highscore;
   }
 
   /**
@@ -78,10 +78,6 @@ export class AuthService {
       localStorage.removeItem(PREF_KEY_LOCALSTORAGE + 'currentUser');
       resolve('');
     });
-  }
-
-  getCollection(uid: string): Observable<UserDoc[]|any> {
-    return this.firestore.collection(`${uid}`).valueChanges()
   }
 
   saveScores(scoresObj: Scores) {

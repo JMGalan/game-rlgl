@@ -67,6 +67,7 @@ export class AuthService {
   createUserScores(userName: string) {
     const newUser = new UserScoresMap(0, 0);
     localStorage.setItem(PREF_KEY_LOCALSTORAGE + userName, JSON.stringify({...newUser}));
+    this.getUserScores(userName);
   }
 
   /**

@@ -6,8 +6,7 @@
              mode="highScore"
              [score]="highScore"></app-score>
 
-  <app-light-bulb 
-            [lightState]="lightState"></app-light-bulb>
+  <app-light-bulb [lightState]="lightState"></app-light-bulb>
 
   <app-score txtLabel="Score"
              mode="currentScore"
@@ -19,5 +18,4 @@
     <app-button-game modeButton="right"
       (onBtnClick)="gameButtonClick($event)"></app-button-game>
   </div>
-
 </div>

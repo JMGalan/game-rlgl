@@ -14,6 +14,8 @@ const PREF_KEY_LOCALSTORAGE = 'GAME_RLGL_';
 export class AuthService {
 
   userName: string = '';
+  score: number = 0;
+  highScore: number = 0;
 
   constructor(
     public auth: AngularFireAuth,
@@ -30,9 +32,16 @@ export class AuthService {
     return false;
   }
 
+  setScores(jsonScores: Scores) {
+    this.score = jsonScores.score;
+    this.highScore = jsonScores.highscore;
+  }
+
   loginRegisterUser(userName: string) {
     let userScores = this.getUserScores(userName);
-    if (!userScores) {
+    if (userScores) {
+      this.setScores(JSON.parse(userScores));
+    } else {
       this.createUserScores(userName);
     }
     return new Promise((resolve) => {

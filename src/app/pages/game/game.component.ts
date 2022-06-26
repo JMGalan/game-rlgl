@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 import { AuthService } from '../../core/services/auth.service';
 
@@ -27,6 +25,8 @@ export class GameComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.userName = this.authServ.userName;
+    this.highScore = this.authServ.highScore;
+    this.score = this.authServ.score;
   }
 
   /**
@@ -110,7 +110,6 @@ export class GameComponent implements OnInit, OnDestroy {
 
   getTimeToRed() {
     let random = Math.max(10000 - this.score * 100, 2000) + this.getRandom(-1500, 1500);
-    console.log('time to red: '+random);
     return random;
   }
 

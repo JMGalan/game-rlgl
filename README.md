@@ -1,5 +1,8 @@
 # PruebaBBVA
 
+URL of the deployed application:
+https://jmgalan.github.io/game-rlgl/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.2.
 
 You need to install several dependencies with its version specified

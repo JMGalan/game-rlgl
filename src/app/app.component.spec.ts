@@ -1,7 +1,27 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Spectator, createRoutingFactory } from '@ngneat/spectator';
 import { AppComponent } from './app.component';
 
+describe('AppComponent', () => {
+  let spectator: Spectator<AppComponent>;
+  const createComponent = createRoutingFactory({
+    component: AppComponent,
+    stubsEnabled: false,
+    providers: [],
+    routes: [{
+      path: '',
+      component: AppComponent
+    }]
+  });
+
+  beforeEach(() => spectator = createComponent());
+
+  it('should create the app', () => {
+    expect(spectator.component).toBeDefined();
+  });
+
+});
+
+/*
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -33,3 +53,4 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('.content span')?.textContent).toContain('pruebaBBVA app is running!');
   });
 });
+*/

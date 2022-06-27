@@ -56,7 +56,7 @@ export class GameComponent implements OnInit, OnDestroy {
   checkScores(stepClk: string) {
     if (this.lightState === 'red') {
       this.score = 0;
-    } else if (this.stepExpected == stepClk) {
+    } else if (this.stepExpected === stepClk) {
       this.score++;
     } else if (this.score > 0) {
       this.score--;

@@ -2,7 +2,6 @@ import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { ButtonGameComponent } from "./button-game.component";
 
 describe('ButtonGame Component', () => {
-
   let spectator: Spectator<ButtonGameComponent>;
   const createComponent = createComponentFactory(ButtonGameComponent);
 
@@ -17,4 +16,10 @@ describe('ButtonGame Component', () => {
     expect(spectator.component.textButton).toEqual("LEFT");
   });
 
+  it('function clickButton', () => {
+    let output;
+    spectator.output('onBtnClick').subscribe(result => (output = result));
+    spectator.component.clickButton('left');
+    expect(output).toEqual('left');
+  });
 });

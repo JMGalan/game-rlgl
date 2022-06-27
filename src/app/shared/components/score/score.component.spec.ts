@@ -1,7 +1,7 @@
 import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { ScoreComponent } from "./score.component";
 
-describe('HeaderGame Component', () => {
+describe('Score Component', () => {
   let spectator: Spectator<ScoreComponent>;
   const createComponent = createComponentFactory(ScoreComponent);
 
